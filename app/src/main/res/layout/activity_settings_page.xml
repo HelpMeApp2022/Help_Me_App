@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsPage">
+
+<ImageView
+    android:id="@+id/logo2"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:srcCompat="@drawable/applogo" />
+
+<TextView
+    android:id="@+id/helpMeApp2"
+    android:layout_width="175dp"
+    android:layout_height="30dp"
+    android:layout_marginTop="5dp"
+    android:text="Help Me App"
+    android:textAlignment="center"
+    android:textColor="#778899"
+    android:textSize="22sp"
+    android:textStyle="bold"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/logo2" />
+
+<EditText
+    android:id="@+id/userFirstName"
+    android:layout_width="185dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="25dp"
+    android:hint="User First Name"
+    android:textSize="18sp"
+    android:textAlignment="center"
+    android:background="@drawable/textviewborder"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/helpMeApp2" />
+
+<EditText
+    android:id="@+id/userLastName"
+    android:layout_width="185dp"
+    android:layout_height="50dp"
+    android:layout_marginTop="25dp"
+    android:layout_marginEnd="15dp"
+    android:hint="User Last Name"
+    android:background="@drawable/textviewborder"
+    android:textSize="18sp"
+    android:textAlignment="center"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/helpMeApp2" />
+
+<EditText
+    android:id="@+id/userEmail"
+    android:layout_width="380dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginEnd="15dp"
+    android:ems="10"
+    android:hint="Update email here"
+    android:background="@drawable/textviewborder"
+    android:textSize="18sp"
+    android:textAlignment="center"
+    android:inputType="textEmailAddress"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.497"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/userFirstName" />
+
+<EditText
+    android:id="@+id/updateEmergencyNumber1"
+    android:layout_width="380dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginEnd="15dp"
+    android:ems="10"
+    android:inputType="number"
+    android:hint="Update Emergency Contact 1"
+    android:background="@drawable/textviewborder"
+    android:textSize="18sp"
+    android:textAlignment="center"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/userEmail" />
+
+<EditText
+    android:id="@+id/updateRelationship1"
+    android:layout_width="380dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginEnd="15dp"
+    android:background="@drawable/textviewborder"
+    android:hint="Relationship"
+    android:textAlignment="center"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/updateEmergencyNumber1" />
+
+<EditText
+    android:id="@+id/updateEmergencyNumber2"
+    android:layout_width="380dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginEnd="15dp"
+    android:ems="10"
+    android:inputType="number"
+    android:hint="Update Emergency Contact 2"
+    android:background="@drawable/textviewborder"
+    android:textSize="18sp"
+    android:textAlignment="center"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/updateRelationship1" />
+
+<EditText
+    android:id="@+id/updateRelationship2"
+    android:layout_width="380dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginEnd="15dp"
+    android:background="@drawable/textviewborder"
+    android:hint="Relationship"
+    android:textAlignment="center"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/updateEmergencyNumber2" />
+
+<EditText
+    android:id="@+id/updateEmergencyNumber3"
+    android:layout_width="380dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginEnd="15dp"
+    android:ems="10"
+    android:inputType="number"
+    android:hint="Update Emergency Contact 3"
+    android:background="@drawable/textviewborder"
+    android:textSize="18sp"
+    android:textAlignment="center"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/updateRelationship2" />
+
+<EditText
+    android:id="@+id/updateRelationship3"
+    android:layout_width="380dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginEnd="15dp"
+    android:background="@drawable/textviewborder"
+    android:hint="Relationship"
+    android:textAlignment="center"
+    android:textSize="18sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/updateEmergencyNumber3" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/buttonborder"
+        android:text="Save"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateRelationship3" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

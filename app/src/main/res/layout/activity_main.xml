@@ -4,28 +4,130 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f7f7f7"
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/settings"
+        android:layout_marginStart="335dp"
+        android:layout_marginTop="5dp"
+        android:background="#f7f7f7"
+        android:drawableTop="@drawable/ic_baseline_settings_24"
+        android:text="Settings"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/welcomeTo"
+        android:layout_width="125dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="90dp"
+        android:text="Welcome to"
+        android:textAlignment="center"
+        android:textColor="#778899"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="150dp"
+        android:layout_height="365dp"
+        android:layout_marginTop="-5dp"
+        app:layout_constraintBottom_toTopOf="@+id/helpMeApp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTo"
+        app:srcCompat="@drawable/applogo" />
+
+    <TextView
+        android:id="@+id/helpMeApp"
+        android:layout_width="175dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="160dp"
+        android:text="Help Me App"
+        android:textAlignment="center"
+        android:textColor="#778899"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeTo" />
+
     <Button
-        android:id="@+id/button"
+        android:id="@+id/SosButton"
+        android:layout_width="240dp"
+        android:layout_height="85dp"
+        android:layout_marginTop="90dp"
+        android:text="SOS"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/sosbutton"
+        android:drawableLeft="@drawable/ic_baseline_phone_24"
+        android:paddingLeft="80dip"
+        android:paddingRight="90dip"
+        android:singleLine="true"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/helpMeApp" />
+
+    <Button
+        android:id="@+id/VoiceButton"
+        android:layout_width="240dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="50dp"
+        android:text="Voice Assistant"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/voicebutton"
+        android:drawableLeft="@drawable/ic_baseline_mic_24"
+        android:paddingLeft="40dip"
+        android:paddingRight="30dip"
+        android:singleLine="true"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SosButton" />
+
+    <Button
+        android:id="@+id/ObjectButton"
+        android:layout_width="240dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="50dp"
+        android:text="Object Detection"
+        android:textSize="18sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/objectbutton"
+        android:drawableLeft="@drawable/ic_baseline_photo_camera_24"
+        android:paddingLeft="30dip"
+        android:paddingRight="15dip"
+        android:singleLine="true"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/VoiceButton" />
+
+    <!--TO DELETE-->
+    <Button
+        android:id="@+id/trial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.631" />
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--TO DELETE-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
