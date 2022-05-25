@@ -63,7 +63,7 @@
 
     <Button
         android:id="@+id/SosButton"
-        android:layout_width="240dp"
+        android:layout_width="275dp"
         android:layout_height="85dp"
         android:layout_marginTop="90dp"
         android:text="SOS"
@@ -72,8 +72,8 @@
         android:textStyle="bold"
         android:background="@drawable/sosbutton"
         android:drawableLeft="@drawable/ic_baseline_phone_24"
-        android:paddingLeft="80dip"
-        android:paddingRight="90dip"
+        android:paddingLeft="90dip"
+        android:paddingRight="110dip"
         android:singleLine="true"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +82,8 @@
 
     <Button
         android:id="@+id/VoiceButton"
-        android:layout_width="240dp"
+        android:layout_width="275dp"
+        android:minWidth="275dp"
         android:layout_height="90dp"
         android:layout_marginTop="50dp"
         android:text="Voice Assistant"
@@ -91,8 +92,8 @@
         android:textStyle="bold"
         android:background="@drawable/voicebutton"
         android:drawableLeft="@drawable/ic_baseline_mic_24"
-        android:paddingLeft="40dip"
-        android:paddingRight="30dip"
+        android:paddingLeft="50dip"
+        android:paddingRight="40dip"
         android:singleLine="true"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +102,8 @@
 
     <Button
         android:id="@+id/ObjectButton"
-        android:layout_width="240dp"
+        android:layout_width="275dp"
+        android:minWidth="275dp"
         android:layout_height="90dp"
         android:layout_marginTop="50dp"
         android:text="Object Detection"
@@ -110,8 +112,8 @@
         android:textStyle="bold"
         android:background="@drawable/objectbutton"
         android:drawableLeft="@drawable/ic_baseline_photo_camera_24"
-        android:paddingLeft="30dip"
-        android:paddingRight="15dip"
+        android:paddingLeft="40dip"
+        android:paddingRight="25dip"
         android:singleLine="true"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
