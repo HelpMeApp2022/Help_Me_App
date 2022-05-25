@@ -197,13 +197,14 @@
 
         <RadioButton
             android:id="@+id/radioButtonMale"
-            android:layout_width="100dp"
+            android:layout_width="84dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
             android:text="Male"
             android:textAlignment="center"
             android:textColor="#babab1"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             tools:ignore="TouchTargetSizeCheck" />
 
@@ -211,11 +212,11 @@
             android:id="@+id/radioButtonFemale"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="5dp"
             android:text="Female"
             android:textAlignment="center"
             android:textColor="#babab1"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             tools:ignore="TouchTargetSizeCheck" />
     </RadioGroup>

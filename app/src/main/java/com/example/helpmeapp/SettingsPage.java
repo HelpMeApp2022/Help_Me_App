@@ -15,7 +15,7 @@ public class SettingsPage extends AppCompatActivity {
         setContentView(R.layout.activity_settings_page);
 
         //Action Bar
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#4e4b49"));
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#97d3dd"));
 
         //Set BackgroundDrawable
         ActionBar actionBar;
