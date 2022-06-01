@@ -67,6 +67,7 @@
         android:layout_height="85dp"
         android:layout_marginTop="90dp"
         android:text="SOS"
+        android:onClick="sos"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:textStyle="bold"
