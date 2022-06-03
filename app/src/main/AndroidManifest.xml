@@ -22,6 +22,7 @@
         <activity
             android:name=".RegisterPage"
             android:exported="true">
+            <!--To launch register page first-->
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
