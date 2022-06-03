@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     //Declaring variables
     private TextView settings;
 
-    private Button trial; //TO DELETE
+    ///private Button trial; //TO DELETE
 
     //testing sms
     String phone = "58806717"; //you can put any target phone number here to test
@@ -51,17 +51,17 @@ public class MainActivity extends AppCompatActivity {
 
        //TO DELETE
         // JUST FOR CHECKING REGISTER INTERFACE
-        trial = findViewById(R.id.trial);
-        trial.setOnClickListener(v -> checkRegisterPage());
+       // trial = findViewById(R.id.trial);
+        //trial.setOnClickListener(v -> checkRegisterPage());
         //TO DELETE
 
     }
 
     //TO DELETE
-    private void checkRegisterPage() {
-        Intent intent = new Intent(this, RegisterPage.class);
-        startActivity(intent);
-    } //TO DELETE
+   // private void checkRegisterPage() {
+     //   Intent intent = new Intent(this, RegisterPage.class);
+       // startActivity(intent);
+    //} //TO DELETE
 
     //SetOnClick listener function from above
     private void openSettingsInterface() {

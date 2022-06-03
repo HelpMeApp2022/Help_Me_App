@@ -115,9 +115,7 @@ public class SettingsPage extends AppCompatActivity {
             referenceProfile.child(userID).setValue(userInfo).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     //setting new display name
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder().setDisplayName(textFirstName + " " + textLastName).build();
-                    firebaseUser.updateProfile(profileUpdates);
-                    Toast.makeText(SettingsPage.this, "Update Successful", Toast.LENGTH_LONG).show();
+                    // Toast.makeText(SettingsPage.this, "Update Successful", Toast.LENGTH_LONG).show();
                 }
                 else {
                     try {
