@@ -20,9 +20,9 @@
             android:name=".SettingsPage"
             android:exported="false" />
         <activity
-            android:name=".RegisterPage"
+            android:name=".MainActivity"
             android:exported="true">
-            <!--To launch register page first-->
+            <!--To launch main page first-->
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +30,7 @@
         </intent-filter>
        </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".RegisterPage"
             android:exported="false"/>
 
     </application>

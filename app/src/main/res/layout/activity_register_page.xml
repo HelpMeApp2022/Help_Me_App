@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,9 +7,14 @@
     android:background="#f7f7f7"
     tools:context=".RegisterPage">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
     <ImageView
         android:id="@+id/logo1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -19,7 +24,7 @@
 
     <TextView
         android:id="@+id/helpMeApp1"
-        android:layout_width="175dp"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="5dp"
         android:text="Help Me App"
@@ -44,20 +49,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/helpMeApp1" />
 
-    <EditText
-        android:id="@+id/lastName"
-        android:layout_width="185dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="15dp"
-        android:hint="Last Name"
-        android:background="@drawable/textviewborder"
-        android:textSize="18sp"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/helpMeApp1" />
+        <EditText
+            android:id="@+id/lastName"
+            android:layout_width="185dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="-50dp"
+            android:layout_marginStart="210dp"
+            android:background="@drawable/textviewborder"
+            android:hint="Last Name"
+            android:textAlignment="center"
+            android:textSize="18sp" />
 
-    <EditText
+        <EditText
         android:id="@+id/email"
         android:layout_width="380dp"
         android:layout_height="50dp"
@@ -189,8 +192,8 @@
         android:id="@+id/radioGroup"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="35dp"
+        android:layout_marginTop="-30dp"
+        android:layout_marginStart="150dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relationship3">
@@ -226,6 +229,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="80dp"
         android:background="@drawable/buttonborder"
         android:text="Register"
         android:textSize="20dp"
@@ -234,5 +238,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
+    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

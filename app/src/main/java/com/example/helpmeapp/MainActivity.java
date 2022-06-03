@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
@@ -28,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     //Declaring variables
     private TextView settings;
 
-    ///private Button trial; //TO DELETE
+    //KEEP ME LOGGED IN
+    private FirebaseAuth firebaseAuth;
 
     //testing sms
     String phone = "58806717"; //you can put any target phone number here to test
@@ -42,31 +45,34 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //hiding action bar on homepage PARSKI LI VILLAIN
+        //hiding action bar on homepage
         Objects.requireNonNull(getSupportActionBar()).hide();
 
         //On click action on settings
         settings = findViewById(R.id.settings);
         settings.setOnClickListener(v -> openSettingsInterface());
 
-       //TO DELETE
-        // JUST FOR CHECKING REGISTER INTERFACE
-       // trial = findViewById(R.id.trial);
-        //trial.setOnClickListener(v -> checkRegisterPage());
-        //TO DELETE
-
+        firebaseAuth = FirebaseAuth.getInstance();
     }
-
-    //TO DELETE
-   // private void checkRegisterPage() {
-     //   Intent intent = new Intent(this, RegisterPage.class);
-       // startActivity(intent);
-    //} //TO DELETE
 
     //SetOnClick listener function from above
     private void openSettingsInterface() {
         Intent intent = new Intent(this, SettingsPage.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser!=null){
+            //There is a user logged in
+        } else {
+            //No one is logged in
+            startActivity(new Intent(this, RegisterPage.class));
+            finish();
+        }
     }
 
 
@@ -90,15 +96,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //function get triggered when sos button is pressed
-
     public void sos(View view) {
         Sms_and_location();
     }
-
-
-
-
-
 
     public void Sms_and_location(){
 
@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                                 //
                                 Toast.makeText(getApplicationContext(), "Message Sent", Toast.LENGTH_LONG).show();
                             } catch (Exception ex) {
-                                Toast.makeText(getApplicationContext(), ex.getMessage().toString(), Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
                                 ex.printStackTrace();
                             }
 

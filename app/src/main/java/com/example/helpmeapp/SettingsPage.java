@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ public class SettingsPage extends AppCompatActivity {
     private EditText updateFirstName, updateLastName, updateEmail, updateEmergency1, updateRelation1;
     private EditText updateEmergency2, updateRelation2, updateEmergency3, updateRelation3;
     private String textFirstName, textLastName, textEmail, textEmergency1, textRelation1;
-    private String textEmergency2, textRelation2, textEmergency3, textRelation3;
+    private String textEmergency2, textRelation2, textEmergency3, textRelation3, txtGender;
 
     private FirebaseAuth authProfile;
 
@@ -105,7 +106,10 @@ public class SettingsPage extends AppCompatActivity {
             textRelation3 = updateRelation3.getText().toString();
 
             //Enter data into firebase db
-            userInfo userInfo = new userInfo();
+            userInfo userInfo = new userInfo(textFirstName, textLastName, textEmail,
+                                             textEmergency1, textRelation1,
+                                             textEmergency2, textRelation2,
+                                             textEmergency3, textRelation3, txtGender);
 
             //Extract user reference from db for help me app users
             DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Help Me App Users");
@@ -114,8 +118,11 @@ public class SettingsPage extends AppCompatActivity {
 
             referenceProfile.child(userID).setValue(userInfo).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    //setting new display name
-                    // Toast.makeText(SettingsPage.this, "Update Successful", Toast.LENGTH_LONG).show();
+                     Toast.makeText(SettingsPage.this, "Update Successful", Toast.LENGTH_LONG).show();
+
+                     //send user back to main page after updating data
+                    Intent intent = new Intent(SettingsPage.this, MainActivity.class);
+                    startActivity(intent);
                 }
                 else {
                     try {
