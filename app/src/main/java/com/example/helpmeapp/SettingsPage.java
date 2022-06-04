@@ -9,6 +9,9 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -176,6 +179,29 @@ public class SettingsPage extends AppCompatActivity {
                 Toast.makeText(SettingsPage.this, "Something went wrong! Please try once again.", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.example_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.item1) {
+            authProfile.signOut();
+            Toast.makeText(this, "Logged Out of HelpMeApp", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, RegisterPage.class);
+            startActivity(intent);
+        }
+        else {
+            Toast.makeText(this, "Something went wrong! Please try again!", Toast.LENGTH_LONG).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     //Declaring variables
     private TextView settings;
 
-    //KEEP ME LOGGED IN
     private FirebaseAuth firebaseAuth;
 
     //testing sms
@@ -61,13 +60,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //Function for one-time login
     @Override
     protected void onStart(){
         super.onStart();
 
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser!=null){
             //There is a user logged in
+            Toast.makeText(this, "Welcome to HelpMeApp!", Toast.LENGTH_SHORT).show();
         } else {
             //No one is logged in
             startActivity(new Intent(this, RegisterPage.class));
@@ -75,9 +76,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Logout function
+    public void logout(View view) {
+        firebaseAuth.signOut();
+        Toast.makeText(this, "Logged out of HelpMeApp!", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(this, RegisterPage.class));
+        finish();
+    }
+
 
     //Function for sending SMS
-
     public void sendSMS(String phoneNo, String msg) {
 
         //convert latitude and longitude to string to send

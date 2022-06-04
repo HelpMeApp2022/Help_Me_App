@@ -10,6 +10,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/logoutButton"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:background="#f7f7f7"
+        android:drawableTop="@drawable/ic_baseline_undo_24"
+        android:text="Logout"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:onClick="logout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/settings"
         android:layout_marginStart="335dp"
         android:layout_marginTop="5dp"
