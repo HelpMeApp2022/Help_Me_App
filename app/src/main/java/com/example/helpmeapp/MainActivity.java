@@ -80,8 +80,12 @@ public class MainActivity extends AppCompatActivity {
     public void logout(View view) {
         firebaseAuth.signOut();
         Toast.makeText(this, "Logged out of HelpMeApp!", Toast.LENGTH_LONG).show();
-        startActivity(new Intent(this, RegisterPage.class));
-        finish();
+
+        Intent intent = new Intent(MainActivity.this, RegisterPage.class);
+        //Clear stack to prevent user coming back to MainPage Activity
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish(); //Close mainpage activity
     }
 
 
