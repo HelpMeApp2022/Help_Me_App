@@ -3,6 +3,10 @@ package com.example.helpmeapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,21 +16,30 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.concurrent.Executor;
+
 public class SettingsPage extends AppCompatActivity {
 
+    //Declaring variables for fingerprint
+    BiometricPrompt biometricPrompt;
+    BiometricPrompt.PromptInfo promptInfo;
+    ScrollView mMainLayout;
+
+    //Declaring variables for editTexts and others
     private EditText updateFirstName, updateLastName, updateEmail, updateEmergency1, updateRelation1;
     private EditText updateEmergency2, updateRelation2, updateEmergency3, updateRelation3;
     private String textFirstName, textLastName, textEmail, textEmergency1, textRelation1;
@@ -38,6 +51,7 @@ public class SettingsPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_page);
+        mMainLayout = findViewById(R.id.main_layout);
 
         //Action Bar
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#97d3dd"));
@@ -67,6 +81,47 @@ public class SettingsPage extends AppCompatActivity {
         //Update details
         Button save_button = findViewById(R.id.saveButton);
         save_button.setOnClickListener(v -> updateDetails(firebaseUser));
+
+        //Fingerprint codes
+        BiometricManager biometricManager = BiometricManager.from(this);
+        switch (biometricManager.canAuthenticate())
+        {
+            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
+                Toast.makeText(getApplicationContext(), "Device does not have any fingerprint sensors!", Toast.LENGTH_SHORT).show();
+                break;
+
+            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
+                Toast.makeText(getApplicationContext(), "Fingerprint sensor not working!", Toast.LENGTH_SHORT).show();
+
+            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
+                Toast.makeText(getApplicationContext(), "No fingerprint assigned!", Toast.LENGTH_SHORT).show();
+        }
+
+        Executor executor = ContextCompat.getMainExecutor(this);
+
+        biometricPrompt = new BiometricPrompt(SettingsPage.this, executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                Toast.makeText(getApplicationContext(), "Fingerprint Successfully Read!", Toast.LENGTH_SHORT).show();
+                mMainLayout.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+            }
+        });
+
+        //Prompting fingerprint part/interface
+        promptInfo = new BiometricPrompt.PromptInfo.Builder().setTitle("HelpMeApp Confirm Access")
+                .setDescription("Touch the fingerprint sensor").setDeviceCredentialAllowed(true).build();
+        biometricPrompt.authenticate(promptInfo);
     }
 
     //Update details function
