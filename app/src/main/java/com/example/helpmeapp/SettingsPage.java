@@ -108,7 +108,7 @@ public class SettingsPage extends AppCompatActivity {
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                Toast.makeText(getApplicationContext(), "Fingerprint Successfully Read!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Authentiction Successful!", Toast.LENGTH_SHORT).show();
                 mMainLayout.setVisibility(View.VISIBLE);
             }
 
