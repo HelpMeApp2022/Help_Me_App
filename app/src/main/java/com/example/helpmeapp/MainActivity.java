@@ -1,15 +1,25 @@
 package com.example.helpmeapp;
 
+import static androidx.core.content.PackageManagerCompat.LOG_TAG;
+
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.speech.RecognizerIntent;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
@@ -23,12 +33,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     //Declaring variables
     private TextView settings;
+    Button btnvoice;
 
     private FirebaseAuth firebaseAuth;
 
@@ -51,7 +63,86 @@ public class MainActivity extends AppCompatActivity {
         settings = findViewById(R.id.settings);
         settings.setOnClickListener(v -> openSettingsInterface());
 
+        //initialising button voice
+        btnvoice = findViewById(R.id.VoiceButton);
+
         firebaseAuth = FirebaseAuth.getInstance();
+
+        // Setting OnClickListener to button Voice
+        btnvoice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialog();
+            }
+        });
+    }
+
+    //Dialog for voice
+    private void openDialog(){
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        startActivityForResult(intent, 200);
+    }
+
+    //Speech to text from voice dialog
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 200 && resultCode == RESULT_OK){
+            ArrayList<String> arrayList = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            //capturing full sentence in single array index 0
+            String voice = arrayList.get(0);
+            //splitting the sentence and add words one by one into array of Strings 'words'
+            String[] words = voice.split(" ");
+            ArrayList<String> s = new ArrayList<>();
+            String voice1=words[0];
+            String voice2=words[1];
+            switch (voice1) {
+                case "telephone":
+                    getnumber(voice2);
+                    break;
+            }
+           // Toast.makeText(this,voice1+voice2,Toast.LENGTH_SHORT).show();
+
+        }else{
+            Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //Getting the number from phone contact list to be called (retrieved by name)
+    public void getnumber(String name){
+        String number="";
+
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS},0);
+        }
+
+        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+        String[] projection    = new String[] {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        int idxName = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+        int idxNumber = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+
+        if(cursor.moveToFirst()) {
+
+            do {
+               String contactname   = cursor.getString(idxName);
+               String contactNumber = cursor.getString(idxNumber);
+
+                if (contactname.equals(name)){
+                    //checking if permission has been granted by user else ask for permission
+                   if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
+                       ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},100);
+                    }
+                   //calling the person
+                    Intent callIntent = new Intent(Intent.ACTION_CALL);
+                    callIntent.setData(Uri.parse("tel:"+contactNumber));
+                    startActivity(callIntent);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
     }
 
     //SetOnClick listener function from above
