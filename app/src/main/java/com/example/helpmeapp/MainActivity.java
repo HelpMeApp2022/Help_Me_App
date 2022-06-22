@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.speech.RecognizerIntent;
+import android.speech.tts.TextToSpeech;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +35,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -123,6 +125,27 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
         int idxName = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
         int idxNumber = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+
+        // calling different ambulance services
+        switch (name){
+            case "God":
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:"+112));
+                startActivity(callIntent);
+                Toast.makeText(this,"Please press on call",Toast.LENGTH_SHORT).show();
+                break;
+            case "Swami":
+                Intent callIntent1 = new Intent(Intent.ACTION_CALL);
+                callIntent1.setData(Uri.parse("tel:"+114));
+                startActivity(callIntent1);
+                break;
+            case "ambulance":
+                Intent callIntent3 = new Intent(Intent.ACTION_CALL);
+                callIntent3.setData(Uri.parse("tel:"+132));
+                startActivity(callIntent3);
+                break;
+            default:
+        }
 
         if(cursor.moveToFirst()) {
 
