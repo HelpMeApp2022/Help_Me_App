@@ -16,9 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HelpMeApp">
         <activity
-            android:name=".Test_location"
-            android:exported="false" />
-        <activity
             android:name=".SettingsPage"
             android:exported="false" />
         <activity

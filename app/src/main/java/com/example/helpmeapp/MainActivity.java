@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:"+112));
                 startActivity(callIntent);
-                Toast.makeText(this,"Please press on call",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"Please press on call",Toast.LENGTH_SHORT).show();
                 break;
             case "Swami":
                 Intent callIntent1 = new Intent(Intent.ACTION_CALL);
@@ -145,6 +145,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(callIntent3);
                 break;
             default:
+                Toast.makeText(this, "Pn compren! Re-essayer!!", Toast.LENGTH_SHORT).show();
+                openDialog();
         }
 
         if(cursor.moveToFirst()) {
