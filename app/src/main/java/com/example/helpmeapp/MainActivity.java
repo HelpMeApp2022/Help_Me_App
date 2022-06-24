@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
 
     //testing sms
-    String phone = "58806717"; //you can put any target phone number here to test
+    String phone = "57604994"; //you can put any target phone number here to test
     String mes = "www.facebook.com";
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             String voice1=words[0];
             String voice2=words[1];
             switch (voice1) {
-                case "telephone":
+                case "call":
                     getnumber(voice2);
                     break;
             }
@@ -126,25 +126,27 @@ public class MainActivity extends AppCompatActivity {
         int idxName = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
         int idxNumber = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
-        // calling different ambulance services
+        // calling different services
         switch (name){
-            case "God":
+            case "police":
                 Intent callIntent = new Intent(Intent.ACTION_CALL);
                 callIntent.setData(Uri.parse("tel:"+112));
                 startActivity(callIntent);
-                Toast.makeText(this,"Please press on call",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this,"Please press on call",Toast.LENGTH_SHORT).show();
                 break;
-            case "Swami":
+            case "poppy":
                 Intent callIntent1 = new Intent(Intent.ACTION_CALL);
-                callIntent1.setData(Uri.parse("tel:"+114));
+                callIntent1.setData(Uri.parse("tel:"+115));
                 startActivity(callIntent1);
                 break;
             case "ambulance":
                 Intent callIntent3 = new Intent(Intent.ACTION_CALL);
-                callIntent3.setData(Uri.parse("tel:"+132));
+                callIntent3.setData(Uri.parse("tel:"+114));
                 startActivity(callIntent3);
                 break;
             default:
+                Toast.makeText(this, "Did not capture! Try-Again!!", Toast.LENGTH_SHORT).show();
+                openDialog();
         }
 
         if(cursor.moveToFirst()) {
@@ -247,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
 
                             try {
                                 SmsManager smsManager = SmsManager.getDefault();
-                                smsManager.sendTextMessage("58806717", null, constructMessage, null, null);
+                                smsManager.sendTextMessage("57604994", null, constructMessage, null, null);
                                 //
                                 Toast.makeText(getApplicationContext(), "Message Sent", Toast.LENGTH_LONG).show();
                             } catch (Exception ex) {
