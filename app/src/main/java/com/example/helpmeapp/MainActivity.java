@@ -1,28 +1,21 @@
 package com.example.helpmeapp;
 
-import static androidx.core.content.PackageManagerCompat.LOG_TAG;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.speech.RecognizerIntent;
-import android.speech.tts.TextToSpeech;
 import android.telephony.SmsManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,14 +28,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     //Declaring variables
     private TextView settings;
-    Button btnvoice;
+    Button btnVoice;
 
     private FirebaseAuth firebaseAuth;
 
@@ -66,12 +58,12 @@ public class MainActivity extends AppCompatActivity {
         settings.setOnClickListener(v -> openSettingsInterface());
 
         //initialising button voice
-        btnvoice = findViewById(R.id.VoiceButton);
+        btnVoice = findViewById(R.id.VoiceButton);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
         // Setting OnClickListener to button Voice
-        btnvoice.setOnClickListener(new View.OnClickListener() {
+        btnVoice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDialog();
@@ -101,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             String voice2=words[1];
             switch (voice1) {
                 case "call":
-                    getnumber(voice2);
+                    getNumber(voice2);
                     break;
             }
            // Toast.makeText(this,voice1+voice2,Toast.LENGTH_SHORT).show();
@@ -112,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Getting the number from phone contact list to be called (retrieved by name)
-    public void getnumber(String name){
+    public void getNumber(String name){
         String number="";
 
         if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
@@ -152,10 +144,10 @@ public class MainActivity extends AppCompatActivity {
         if(cursor.moveToFirst()) {
 
             do {
-               String contactname   = cursor.getString(idxName);
+               String contactName   = cursor.getString(idxName);
                String contactNumber = cursor.getString(idxNumber);
 
-                if (contactname.equals(name)){
+                if (contactName.equals(name)){
                     //checking if permission has been granted by user else ask for permission
                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED){
                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE},100);
