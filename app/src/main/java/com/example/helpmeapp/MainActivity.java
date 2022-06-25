@@ -1,5 +1,6 @@
 package com.example.helpmeapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -9,7 +10,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,9 +23,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -36,11 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView settings;
     Button btnVoice;
 
-    private FirebaseAuth firebaseAuth;
-
-    //testing sms
-    String phone = "57604994"; //you can put any target phone number here to test
-    String mes = "www.facebook.com";
+    private FirebaseAuth firebaseAuth; //database connection
+    private String textEmergency1, textEmergency2, textEmergency3;
     private FusedLocationProviderClient fusedLocationClient;
 
     @Override
@@ -63,12 +64,17 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         // Setting OnClickListener to button Voice
-        btnVoice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDialog();
-            }
-        });
+        btnVoice.setOnClickListener(v -> openDialog());
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        showNumbers(firebaseUser);
+    }
+
+    //SetOnClick listener function from above
+    private void openSettingsInterface() {
+        Intent intent = new Intent(this, SettingsPage.class);
+        startActivity(intent);
     }
 
     //Dialog for voice
@@ -112,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-        String[] projection    = new String[] {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+        String[] projection    = new String[]
+                {ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                 ContactsContract.CommonDataKinds.Phone.NUMBER};
         Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
         int idxName = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
@@ -126,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(callIntent);
                 //Toast.makeText(this,"Please press on call",Toast.LENGTH_SHORT).show();
                 break;
-            case "poppy":
+            case "Firefighter":
                 Intent callIntent1 = new Intent(Intent.ACTION_CALL);
                 callIntent1.setData(Uri.parse("tel:"+115));
                 startActivity(callIntent1);
@@ -162,12 +169,6 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
     }
 
-    //SetOnClick listener function from above
-    private void openSettingsInterface() {
-        Intent intent = new Intent(this, SettingsPage.class);
-        startActivity(intent);
-    }
-
     //Function for one-time login
     @Override
     protected void onStart(){
@@ -196,23 +197,31 @@ public class MainActivity extends AppCompatActivity {
         finish(); //Close mainpage activity
     }
 
+    private void showNumbers(FirebaseUser firebaseUser) {
+        String userIDofRegistered = firebaseUser.getUid();
 
-    //Function for sending SMS
-    public void sendSMS(String phoneNo, String msg) {
+        //Extracting user reference from db for "Help Me App Users"
+        DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Help Me App Users");
 
-        //convert latitude and longitude to string to send
+        referenceProfile.child(userIDofRegistered).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userInfo userInfo = snapshot.getValue(userInfo.class);
+                if (userInfo !=null) {
+                    textEmergency1 = userInfo.emergencyContact1;
+                    textEmergency2 = userInfo.emergencyContact2;
+                    textEmergency3 = userInfo.emergencyContact3;
 
+                } else {
+                    Toast.makeText(MainActivity.this, "Something went wrong! Please try once again.", Toast.LENGTH_LONG).show();
+                }
+            }
 
-        try {
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(phoneNo, null, msg, null, null);
-            //
-            Toast.makeText(getApplicationContext(), "Message Sent", Toast.LENGTH_LONG).show();
-        } catch (Exception ex) {
-            Toast.makeText(getApplicationContext(), ex.getMessage().toString(), Toast.LENGTH_LONG).show();
-            ex.printStackTrace();
-        }
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MainActivity.this, "Something went wrong! Please try once again.", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     //function get triggered when sos button is pressed
@@ -227,29 +236,31 @@ public class MainActivity extends AppCompatActivity {
             if (getApplicationContext().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)== PackageManager.PERMISSION_GRANTED){
 
                 //get the location
-                fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
+                fusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
 
-                        if (location!=null){
-                            double latitude=location.getLatitude();
-                            double longitude= location.getLongitude();
-                            String str_lat=Double.toString(latitude);
-                            String str_long=Double.toString(longitude);
-                            String constructMessage= "I am in an Emergency situation " + "My location on map is: " +
-                                    "www.google.com/maps/place/"+str_lat+","+str_long;
+                    if (location!=null){
+                        double latitude=location.getLatitude();
+                        double longitude= location.getLongitude();
+                        String str_lat=Double.toString(latitude);
+                        String str_long=Double.toString(longitude);
+                        String constructMessage= "I am in an EMERGENCY situation!!! " + "My location on map is: " +
+                                "www.google.com/maps/place/"+str_lat+","+str_long;
+                        String contactPerson1 = textEmergency1;
+                        String contactPerson2 = textEmergency2;
+                        String contactPerson3 = textEmergency3;
 
-                            try {
-                                SmsManager smsManager = SmsManager.getDefault();
-                                smsManager.sendTextMessage("57604994", null, constructMessage, null, null);
-                                //
-                                Toast.makeText(getApplicationContext(), "Message Sent", Toast.LENGTH_LONG).show();
-                            } catch (Exception ex) {
-                                Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
-                                ex.printStackTrace();
-                            }
+                        try {
+                            SmsManager smsManager = SmsManager.getDefault();
+                            smsManager.sendTextMessage(contactPerson1, null, constructMessage, null, null);
+                            smsManager.sendTextMessage(contactPerson2, null, constructMessage, null, null);
+                            smsManager.sendTextMessage(contactPerson3, null, constructMessage, null, null);
 
+                            Toast.makeText(getApplicationContext(), "Emergency Message Sent!!", Toast.LENGTH_LONG).show();
+                        } catch (Exception ex) {
+                            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+                            ex.printStackTrace();
                         }
+
                     }
                 });
 

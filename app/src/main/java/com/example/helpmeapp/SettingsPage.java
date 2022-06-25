@@ -115,6 +115,7 @@ public class SettingsPage extends AppCompatActivity {
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
+                Toast.makeText(getApplicationContext(), "Authentication Failed! Please try again!!", Toast.LENGTH_SHORT).show();
             }
         });
 
