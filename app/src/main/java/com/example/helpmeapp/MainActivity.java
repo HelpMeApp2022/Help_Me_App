@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Declaring variables
     private TextView settings;
-    Button btnVoice;
+    Button btnVoice, object;
 
     private FirebaseAuth firebaseAuth; //database connection
     private String textEmergency1, textEmergency2, textEmergency3, textRelation1,textRelation2,textRelation3;
@@ -58,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
         settings = findViewById(R.id.settings);
         settings.setOnClickListener(v -> openSettingsInterface());
 
+        //On click action on object detection
+        object = findViewById(R.id.ObjectButton);
+        object.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openObjectDetectionInterface();
+            }
+        });
+
         //initialising button voice
         btnVoice = findViewById(R.id.VoiceButton);
 
@@ -69,11 +78,16 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         showNumbers(firebaseUser);
-    }
 
-    //SetOnClick listener function from above
+    }
+    //SetOnClick listener function from above:
     private void openSettingsInterface() {
         Intent intent = new Intent(this, SettingsPage.class);
+        startActivity(intent);
+    }
+
+    private void openObjectDetectionInterface() {
+        Intent intent = new Intent(this, ObjectDetectionPage.class);
         startActivity(intent);
     }
 
