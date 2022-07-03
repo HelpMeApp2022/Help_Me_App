@@ -1,7 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ObjectDetectionPage"/>
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="165dp"
+        android:src="@drawable/applogo"
+        android:id="@+id/obLogo"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="80dp"
+        android:text="Help Me App"
+        android:textAlignment="center"
+        android:textColor="#778899"
+        android:textSize="22sp"
+        android:textStyle="bold" />
+
+    <org.opencv.android.JavaCameraView
+        android:id="@+id/frame_Surface"
+        android:layout_width="350dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="125dp"
+        android:layout_marginLeft="30dp"/>
+
+</FrameLayout>

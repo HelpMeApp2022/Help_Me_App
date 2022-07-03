@@ -2,9 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
+    <item android:title="Refresh"
+        android:icon="@drawable/ic_baseline_refresh_24"
+        android:orderInCategory="1"
+        android:id="@+id/menu_refresh"
+        app:showAsAction="ifRoom"/>
+
+    <item android:title="Main Menu"
+        android:id="@+id/actionBarMain"
+        />
+
+    <item android:title="Settings"
+        android:id="@+id/actionBarSetting"
+        />
+
+    <item android:title="Logout"
         android:id="@+id/item1"
         android:icon="@drawable/ic_baseline_undo_24"
-        android:title="Logout"
-        app:showAsAction = "ifRoom"/>
+        />
 </menu>

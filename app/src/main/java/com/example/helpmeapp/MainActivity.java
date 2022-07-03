@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.provider.ContactsContract;
 import android.speech.RecognizerIntent;
 import android.telephony.SmsManager;
@@ -34,7 +35,20 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import org.opencv.android.OpenCVLoader;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
+    static {
+        if(OpenCVLoader.initDebug()){
+            Log.d("MainActivity: ","Opencv is loaded");
+        }
+        else {
+            Log.d("MainActivity: ","Opencv failed to load");
+        }
+    }
+
+    private Button camera_button;
 
     //Declaring variables
     private TextView settings;
@@ -59,11 +73,12 @@ public class MainActivity extends AppCompatActivity {
         settings.setOnClickListener(v -> openSettingsInterface());
 
         //On click action on object detection
-        object = findViewById(R.id.ObjectButton);
-        object.setOnClickListener(new View.OnClickListener() {
+        camera_button = findViewById(R.id.ObjectButton);
+        camera_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openObjectDetectionInterface();
+                startActivity(new Intent(MainActivity.this,ObjectDetectionPage.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
 

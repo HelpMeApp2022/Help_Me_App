@@ -258,6 +258,20 @@ public class SettingsPage extends AppCompatActivity {
             startActivity(intent);
             finish(); //Close setting activity
         }
+        else if (id == R.id.actionBarMain) {
+            Intent intent = new Intent(SettingsPage.this, MainActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.actionBarSetting) {
+            Intent intent = new Intent(SettingsPage.this, SettingsPage.class);
+            startActivity(intent);
+        }
+        else if (id==R.id.menu_refresh) {
+            //Refresh page/activity
+            startActivity(getIntent());
+            finish();
+            overridePendingTransition(0, 0);
+        }
         else {
             Toast.makeText(this, "Something went wrong! Please try again!", Toast.LENGTH_LONG).show();
         }
