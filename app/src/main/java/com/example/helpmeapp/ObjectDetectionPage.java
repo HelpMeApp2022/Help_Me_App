@@ -29,6 +29,7 @@ import androidx.appcompat.app.ActionBar;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,8 +39,12 @@ import java.io.IOException;
 public class ObjectDetectionPage extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2{
 
     private FirebaseAuth authProfile;
+   private TextView test_t;
+
 
     private static final String TAG="ObjectDetectionPage";
+
+
 
     private Mat mRgba;
     private Mat mGray;
@@ -68,6 +73,7 @@ public class ObjectDetectionPage extends AppCompatActivity implements CameraBrid
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //test = findViewById(R.id.HelpMeApp);
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -147,12 +153,16 @@ public class ObjectDetectionPage extends AppCompatActivity implements CameraBrid
         mRgba.release();
     }
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame){
+
+        test_t = findViewById(R.id.HelpMeApp);
         mRgba=inputFrame.rgba();
         mGray=inputFrame.gray();
 
         // now call that function
         Mat out=new Mat();
         out=objectDetectorClass.recognizeImage(mRgba);
+
+
 
         return out;
     }

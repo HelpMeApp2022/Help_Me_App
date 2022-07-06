@@ -2,14 +2,21 @@ package com.example.helpmeapp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +26,7 @@ import android.speech.RecognizerIntent;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +39,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.collection.LLRBNode;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -53,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     //Declaring variables
     private TextView settings;
     Button btnVoice, object;
+    View view;
+
 
     private FirebaseAuth firebaseAuth; //database connection
     private String textEmergency1, textEmergency2, textEmergency3, textRelation1,textRelation2,textRelation3;
@@ -71,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
         //On click action on settings
         settings = findViewById(R.id.settings);
         settings.setOnClickListener(v -> openSettingsInterface());
+
+        //to get layout to be able to change color
+        //layout=findViewById(R.id.linearlayout);
 
         //On click action on object detection
         camera_button = findViewById(R.id.ObjectButton);
@@ -291,10 +305,17 @@ public class MainActivity extends AppCompatActivity {
 
     //function get triggered when sos button is pressed
     public void sos(View view) {
+
+        final MediaPlayer mediaPlayer= MediaPlayer.create(this,R.raw.alarm);
+        mediaPlayer.start();
+
         Sms_and_location();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void Sms_and_location(){
+
+
 
         if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
 
@@ -338,5 +359,75 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+        flashLightOn();
+        blinkFlash();
+
+
+    }
+
+    //code for flashlight
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void flashLightOff(){
+        CameraManager cameraManager= (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        try {
+            String cameraId=cameraManager.getCameraIdList()[0];
+            cameraManager.setTorchMode(cameraId,false);
+        }
+        catch(CameraAccessException e) {
+
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void flashLightOn(){
+        CameraManager cameraManager= (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+
+        try {
+            String cameraId=cameraManager.getCameraIdList()[0];
+            cameraManager.setTorchMode(cameraId,true);
+        }
+        catch (CameraAccessException e){
+
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void blinkFlash(){
+        CameraManager cameraManager= (CameraManager) getSystemService(Context.CAMERA_SERVICE);
+        String myString="01010101010011011001101010101010101010101010110011";
+        long blinkDelay=150;
+        for(int i=0;i<myString.length();i++){
+            if (myString.charAt(i)=='0'){
+                try{
+                    String cameraId=cameraManager.getCameraIdList()[0];
+                    cameraManager.setTorchMode(cameraId,true);
+                }
+                catch (CameraAccessException e){
+
+                }
+
+
+
+
+            }
+
+            else {
+                try {
+                    String cameraId=cameraManager.getCameraIdList()[0];
+                    cameraManager.setTorchMode(cameraId,false);
+                }
+                catch(CameraAccessException e){
+
+                }
+            }
+
+            try {
+                Thread.sleep(blinkDelay);
+            }
+            catch (InterruptedException e){
+                e.printStackTrace();
+            }
+        }
     }
 }

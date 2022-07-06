@@ -13,6 +13,7 @@
         android:id="@+id/obLogo"/>
 
     <TextView
+        android:id="@+id/HelpMeApp"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="80dp"
@@ -24,9 +25,9 @@
 
     <org.opencv.android.JavaCameraView
         android:id="@+id/frame_Surface"
-        android:layout_width="350dp"
-        android:layout_height="500dp"
-        android:layout_marginTop="125dp"
-        android:layout_marginLeft="30dp"/>
+        android:layout_width="337dp"
+        android:layout_height="544dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="125dp" />
 
 </FrameLayout>
