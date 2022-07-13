@@ -304,6 +304,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //function get triggered when sos button is pressed
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void sos(View view) {
 
         final MediaPlayer mediaPlayer= MediaPlayer.create(this,R.raw.alarm);
